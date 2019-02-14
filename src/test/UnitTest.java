@@ -2,6 +2,7 @@ package test;
 
 import com.fzk.ioc.beans.AutowireCapableBeanFactory;
 import com.fzk.ioc.beans.def.BeanDefinition;
+import com.fzk.ioc.beans.def.PropertyValues;
 import org.junit.Test;
 
 /**
@@ -18,10 +19,16 @@ public class UnitTest {
     public void getBean() throws Exception {
         // 创建bean工厂
         AutowireCapableBeanFactory beanFactory = new AutowireCapableBeanFactory();
-        // 注册bean定义
+
+        // 定义bean属性
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue("name", "fanzhoukai");
+        // 注册bean定义、bean属性赋值
         BeanDefinition beanDefinition = new BeanDefinition();
         beanDefinition.setClassObject(HelloService.class);
+        beanDefinition.setPropertyValues(propertyValues);
         beanFactory.registerBeanDefinition(helloServiceBeanName, beanDefinition);
+
         // 获取bean
         HelloService bean = (HelloService) beanFactory.getBean(helloServiceBeanName);
         bean.sayHello();

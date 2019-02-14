@@ -8,7 +8,20 @@ package test;
  * 2019/2/13 21:34
  */
 public class HelloService {
+    /**
+     * 普通bean属性，用于测试属性赋值
+     */
+    private String name;
+
     public void sayHello() {
-        System.out.println("Hello, world!");
+        System.out.println("Hello, my name is " + name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

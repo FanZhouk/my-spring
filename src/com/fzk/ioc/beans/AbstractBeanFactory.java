@@ -2,7 +2,6 @@ package com.fzk.ioc.beans;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,21 +36,17 @@ public abstract class AbstractBeanFactory implements BeanFactory {
     }
 
     /**
-     * 根据bean名称，创建bean
+     * 根据bean定义信息创建bean
      *
      * @param beanDefinition bean定义
      * @return bean实例
      */
-    private Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
-        if (beanDefinition.getBean() != null)
-            return beanDefinition.getBean();
-        return beanDefinition.getClassObject().getConstructor().newInstance();
-    }
+    public abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
 
     /**
      * 注册bean定义
      *
-     * @param name bean名称
+     * @param name           bean名称
      * @param beanDefinition bean定义信息
      */
     public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {

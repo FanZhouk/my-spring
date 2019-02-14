@@ -13,7 +13,9 @@ public class BeanDefinition {
     private String className;
     // bean所属类对象
     private Class<?> classObject;
-    // TODO bean属性列表
+    // bean属性列表
+    // 未直接使用List<PropertyValue>，是为了便于封装一些操作
+    private PropertyValues propertyValues;
 
     public Object getBean() {
         return bean;
@@ -46,5 +48,13 @@ public class BeanDefinition {
     public void setClassObject(Class<?> classObject) {
         this.classObject = classObject;
         this.className = classObject.getName();
+    }
+
+    public PropertyValues getPropertyValues() {
+        return propertyValues;
+    }
+
+    public void setPropertyValues(PropertyValues propertyValues) {
+        this.propertyValues = propertyValues;
     }
 }
