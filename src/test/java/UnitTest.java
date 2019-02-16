@@ -1,5 +1,3 @@
-package test;
-
 import com.fzk.ioc.beans.AutowireCapableBeanFactory;
 import com.fzk.ioc.beans.def.BeanDefinition;
 import com.fzk.ioc.beans.def.PropertyValues;
