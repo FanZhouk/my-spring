@@ -16,6 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
     /**
      * 存储bean定义
+     * 此处只存储一个配置文件内的bean定义信息，且不包含bean实例。
+     * 此map与AbstractBeanFactory中map的区别是，后者是整个IoC容器，包含全部bean定义信息及bean实例。
+     * <p>
      * key:bean名称; value:bean定义
      */
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<String, BeanDefinition>();

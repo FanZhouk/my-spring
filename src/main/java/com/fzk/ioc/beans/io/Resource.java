@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 统一资源文件接口
+ * 统一资源读取接口
  *
  * author:fanzhoukai
  * 2019/2/17 9:29
