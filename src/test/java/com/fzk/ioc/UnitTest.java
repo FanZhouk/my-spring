@@ -4,6 +4,7 @@ import com.fzk.ioc.beans.def.reader.XmlBeanDefinitionReader;
 import com.fzk.ioc.beans.factory.AutowireCapableBeanFactory;
 import com.fzk.ioc.beans.def.BeanDefinition;
 import com.fzk.ioc.beans.io.ResourceLoader;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class UnitTest {
 
     private static final String helloServiceBeanName = "helloService";
+    private static final String byebyeServiceBeanName = "byebyeService";
 
     /**
      * 获取bean（手动进行bean属性赋值）
@@ -53,7 +55,12 @@ public class UnitTest {
         }
 
         // 获取bean
-        HelloService bean = (HelloService) beanFactory.getBean(helloServiceBeanName);
-        bean.sayHello();
+        HelloService helloBean = (HelloService) beanFactory.getBean(helloServiceBeanName);
+        ByebyeService byebyeBean = (ByebyeService) beanFactory.getBean(byebyeServiceBeanName);
+        helloBean.sayHello();
+        byebyeBean.sayByebye();
+        // 测试循环依赖
+        boolean validateCircleReference = helloBean.getByebyeService() == byebyeBean && byebyeBean.getHelloService() == helloBean;
+        Assert.assertTrue("循环依赖测试失败", validateCircleReference);
     }
 }
