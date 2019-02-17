@@ -52,4 +52,13 @@ public abstract class AbstractBeanFactory implements BeanFactory {
     public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
         beans.put(name, beanDefinition);
     }
+
+    /**
+     * 预先初始化全部bean
+     */
+    public void preInstantiateSingletons() throws Exception {
+        for (String beanName : beans.keySet()) {
+            getBean(beanName);
+        }
+    }
 }

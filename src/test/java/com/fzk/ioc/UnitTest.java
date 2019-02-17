@@ -1,8 +1,8 @@
-import com.fzk.ioc.beans.def.reader.BeanDefinitionReader;
+package com.fzk.ioc;
+
 import com.fzk.ioc.beans.def.reader.XmlBeanDefinitionReader;
 import com.fzk.ioc.beans.factory.AutowireCapableBeanFactory;
 import com.fzk.ioc.beans.def.BeanDefinition;
-import com.fzk.ioc.beans.def.PropertyValues;
 import com.fzk.ioc.beans.io.ResourceLoader;
 import org.junit.Test;
 

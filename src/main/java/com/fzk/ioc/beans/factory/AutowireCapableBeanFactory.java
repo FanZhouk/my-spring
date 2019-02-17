@@ -1,6 +1,7 @@
 package com.fzk.ioc.beans.factory;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
+import com.fzk.ioc.beans.def.BeanReference;
 import com.fzk.ioc.beans.def.PropertyValue;
 
 import java.lang.reflect.Field;
@@ -29,16 +30,22 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
         // 放入IoC容器中
         beanDefinition.setBean(bean);
         // 属性赋值
-        setPropertyValues(beanDefinition, bean);
+        applyPropertyValues(beanDefinition, bean);
         return bean;
     }
 
     // 反射给bean进行属性赋值
-    private void setPropertyValues(BeanDefinition beanDefinition, Object bean) throws NoSuchFieldException, IllegalAccessException {
+    private void applyPropertyValues(BeanDefinition beanDefinition, Object bean) throws Exception {
         for (PropertyValue property : beanDefinition.getPropertyValues().getPropertyValues().values()) {
             Field field = bean.getClass().getDeclaredField(property.getFieldName());
             field.setAccessible(true);
-            field.set(bean, property.getValue());
+
+            Object value = property.getValue();
+            // 处理bean依赖
+            if (value instanceof BeanReference) {
+                value = getBean(((BeanReference) value).getName());
+            }
+            field.set(bean, value);
         }
     }
 }

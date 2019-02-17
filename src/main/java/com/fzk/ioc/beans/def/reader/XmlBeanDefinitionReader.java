@@ -1,7 +1,9 @@
 package com.fzk.ioc.beans.def.reader;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
+import com.fzk.ioc.beans.def.BeanReference;
 import com.fzk.ioc.beans.io.ResourceLoader;
+import org.junit.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -74,7 +76,14 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 Element propertyElement = (Element) propertyItem;
                 String name = propertyElement.getAttribute("name");
                 String value = propertyElement.getAttribute("value");
-                beanDefinition.getPropertyValues().addPropertyValue(name, value);
+                if (value != null && value.length() > 0) {
+                    beanDefinition.getPropertyValues().addPropertyValue(name, value);
+                } else {
+                    String ref = propertyElement.getAttribute("ref");
+                    Assert.assertTrue("属性" + name + "的value和ref值不能均为空", ref != null && ref.length() > 0);
+                    BeanReference beanReference = new BeanReference(ref);
+                    beanDefinition.getPropertyValues().addPropertyValue(name, beanReference);
+                }
             }
         }
     }
