@@ -4,6 +4,8 @@ import com.fzk.ioc.beans.def.reader.XmlBeanDefinitionReader;
 import com.fzk.ioc.beans.factory.AutowireCapableBeanFactory;
 import com.fzk.ioc.beans.def.BeanDefinition;
 import com.fzk.ioc.beans.io.ResourceLoader;
+import com.fzk.ioc.context.ApplicationContext;
+import com.fzk.ioc.context.ClasspathXmlApplicationContext;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +19,13 @@ import java.util.Map;
  */
 public class UnitTest {
 
+    // bean名称
     private static final String helloServiceBeanName = "helloService";
     private static final String byebyeServiceBeanName = "byebyeService";
+
+    // xml配置文件路径
+    private static final String xmlPath = "beans.xml";
+
 
     /**
      * 获取bean（手动进行bean属性赋值）
@@ -40,13 +47,13 @@ public class UnitTest {
     }
 
     /**
-     * 获取bean（xml配置读取bean定义的方式）
+     * 获取bean（xml配置读取bean定义的方式，同时测试循环依赖）
      */
     @Test
     public void getBeanXml() throws Exception {
         // 设置xml路径，并解析为bean定义
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(new ResourceLoader());
-        reader.loadBeanDefinitions("beans.xml");
+        reader.loadBeanDefinitions(xmlPath);
 
         // 创建bean工厂，注册bean定义
         AutowireCapableBeanFactory beanFactory = new AutowireCapableBeanFactory();
@@ -62,5 +69,15 @@ public class UnitTest {
         // 测试循环依赖
         boolean validateCircleReference = helloBean.getByebyeService() == byebyeBean && byebyeBean.getHelloService() == helloBean;
         Assert.assertTrue("循环依赖测试失败", validateCircleReference);
+    }
+
+    /**
+     * 测试ApplicationContext
+     */
+    @Test
+    public void getBeanApplicationContext() throws Exception {
+        ApplicationContext context = new ClasspathXmlApplicationContext(xmlPath);
+        HelloService helloBean = (HelloService) context.getBean(helloServiceBeanName);
+        helloBean.sayHello();
     }
 }
