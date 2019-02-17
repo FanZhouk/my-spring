@@ -1,4 +1,4 @@
-package com.fzk.ioc.beans;
+package com.fzk.ioc.beans.factory;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
 
@@ -41,7 +41,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      * @param beanDefinition bean定义
      * @return bean实例
      */
-    public abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
+    protected abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
 
     /**
      * 注册bean定义

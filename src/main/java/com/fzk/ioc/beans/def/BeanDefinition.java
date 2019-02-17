@@ -15,7 +15,7 @@ public class BeanDefinition {
     private Class<?> classObject;
     // bean属性列表
     // 未直接使用List<PropertyValue>，是为了便于封装一些操作
-    private PropertyValues propertyValues;
+    private PropertyValues propertyValues = new PropertyValues();
 
     public Object getBean() {
         return bean;

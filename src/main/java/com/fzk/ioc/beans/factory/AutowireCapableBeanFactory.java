@@ -1,4 +1,4 @@
-package com.fzk.ioc.beans;
+package com.fzk.ioc.beans.factory;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
 import com.fzk.ioc.beans.def.PropertyValue;
@@ -21,7 +21,7 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
      * @param beanDefinition bean定义
      * @return bean实例
      */
-    public Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
+    protected Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
         if (beanDefinition.getBean() != null)
             return beanDefinition.getBean();
         // 实例化对象

@@ -1,4 +1,4 @@
-package com.fzk.ioc.beans;
+package com.fzk.ioc.beans.factory;
 
 /**
  * bean工厂接口
