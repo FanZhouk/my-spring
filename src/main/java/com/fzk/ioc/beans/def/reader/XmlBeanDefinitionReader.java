@@ -61,6 +61,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
         // 构造bean定义对象
         BeanDefinition beanDefinition = new BeanDefinition();
+        beanDefinition.setBeanName(beanName);
         beanDefinition.setClassName(beanClass);
         processPropertyValues(beanDefinition, element);
 

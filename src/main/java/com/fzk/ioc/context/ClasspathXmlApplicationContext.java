@@ -54,10 +54,16 @@ public class ClasspathXmlApplicationContext extends AbstractApplicationContext {
      */
     @Override
     public void refresh() throws Exception {
+    	// 读取xml中的bean定义至reader中
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(new ResourceLoader());
         reader.loadBeanDefinitions(configLocation);
+
+        // 注册bean定义至IoC容器缓存中
         for (Map.Entry<String, BeanDefinition> entry : reader.getBeanDefinitionMap().entrySet()) {
             super.beanFactory.registerBeanDefinition(entry.getKey(), entry.getValue());
         }
+
+        // 预先实例化所有单例bean
+	    beanFactory.preInstantiateSingletons();
     }
 }

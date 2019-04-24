@@ -9,6 +9,8 @@ package com.fzk.ioc.beans.def;
 public class BeanDefinition {
     // bean实例 TODO 可改为泛型
     private Object bean;
+    // bean名称
+	private String beanName;
     // bean类型名称
     private String className;
     // bean所属类对象
@@ -57,4 +59,12 @@ public class BeanDefinition {
     public void setPropertyValues(PropertyValues propertyValues) {
         this.propertyValues = propertyValues;
     }
+
+	public String getBeanName() {
+		return beanName;
+	}
+
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
+	}
 }
