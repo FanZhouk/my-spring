@@ -57,8 +57,10 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      * 预先初始化全部bean
      */
     public void preInstantiateSingletons() throws Exception {
-        for (String beanName : beans.keySet()) {
-            getBean(beanName);
-        }
+	    for (Map.Entry<String, BeanDefinition> entry : beans.entrySet()) {
+		    if (entry.getValue().isSingleton()) {
+		    	getBean(entry.getKey());
+		    }
+	    }
     }
 }

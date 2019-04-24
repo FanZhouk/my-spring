@@ -80,4 +80,15 @@ public class UnitTest {
         HelloService helloBean = (HelloService) context.getBean(helloServiceBeanName);
         helloBean.sayHello();
     }
+
+	/**
+	 * 测试非单例bean
+	 */
+	@Test
+	public void notSingleton() throws Exception {
+		ApplicationContext context = new ClasspathXmlApplicationContext(xmlPath);
+		ByebyeService bean1 = (ByebyeService) context.getBean(byebyeServiceBeanName);
+		ByebyeService bean2 = (ByebyeService) context.getBean(byebyeServiceBeanName);
+		System.out.println(bean1 == bean2);
+	}
 }

@@ -6,7 +6,7 @@
         <property name="byebyeService" ref="byebyeService"></property>
     </bean>
 
-    <bean name="byebyeService" class="com.fzk.ioc.ByebyeService">
+    <bean name="byebyeService" class="com.fzk.ioc.ByebyeService" singleton="false">
         <property name="helloService" ref="helloService"></property>
     </bean>
 

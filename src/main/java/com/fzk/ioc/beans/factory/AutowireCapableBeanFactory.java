@@ -28,7 +28,9 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
         // 实例化对象
         Object bean = beanDefinition.getClassObject().getConstructor().newInstance();
         // 放入IoC容器中
-        beanDefinition.setBean(bean);
+	    if (beanDefinition.isSingleton()) {
+		    beanDefinition.setBean(bean);
+	    }
         // 属性赋值
         applyPropertyValues(beanDefinition, bean);
         return bean;

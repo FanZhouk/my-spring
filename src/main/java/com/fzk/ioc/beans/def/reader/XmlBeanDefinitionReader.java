@@ -61,8 +61,15 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
         // 构造bean定义对象
         BeanDefinition beanDefinition = new BeanDefinition();
+        // 基本属性
         beanDefinition.setBeanName(beanName);
         beanDefinition.setClassName(beanClass);
+
+        // 其他非必填属性
+        if(element.hasAttribute("singleton")) {
+        	beanDefinition.setSingleton("true".equals(element.getAttribute("singleton")));
+        }
+        // 属性赋值
         processPropertyValues(beanDefinition, element);
 
         super.getBeanDefinitionMap().put(beanName, beanDefinition);

@@ -15,6 +15,8 @@ public class BeanDefinition {
     private String className;
     // bean所属类对象
     private Class<?> classObject;
+    // 是否单例
+	private boolean singleton = true;
     // bean属性列表
     // 未直接使用List<PropertyValue>，是为了便于封装一些操作
     private PropertyValues propertyValues = new PropertyValues();
@@ -66,5 +68,13 @@ public class BeanDefinition {
 
 	public void setBeanName(String beanName) {
 		this.beanName = beanName;
+	}
+
+	public boolean isSingleton() {
+		return singleton;
+	}
+
+	public void setSingleton(boolean singleton) {
+		this.singleton = singleton;
 	}
 }
