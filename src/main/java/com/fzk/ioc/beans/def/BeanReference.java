@@ -1,7 +1,7 @@
 package com.fzk.ioc.beans.def;
 
 /**
- * 被依赖的bean对象
+ * bean引用对象
  * bean的属性为另一个bean时，使用此类对象代替
  *
  * author:fanzhoukai

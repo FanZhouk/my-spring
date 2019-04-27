@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC  "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
+    <!-- 单例bean，依赖非单例的byebyeService -->
     <bean name="helloService" class="com.fzk.ioc.HelloService">
         <property name="name" value="fanzhoukai"></property>
         <property name="byebyeService" ref="byebyeService"></property>
     </bean>
 
+    <!-- 多例bean -->
     <bean name="byebyeService" class="com.fzk.ioc.ByebyeService" singleton="false">
         <property name="helloService" ref="helloService"></property>
     </bean>

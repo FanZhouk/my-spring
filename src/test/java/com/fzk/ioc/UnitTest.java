@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * 单元测试类
@@ -89,6 +90,38 @@ public class UnitTest {
 		ApplicationContext context = new ClasspathXmlApplicationContext(xmlPath);
 		ByebyeService bean1 = (ByebyeService) context.getBean(byebyeServiceBeanName);
 		ByebyeService bean2 = (ByebyeService) context.getBean(byebyeServiceBeanName);
-		System.out.println(bean1 == bean2);
+		System.out.println(bean1 == bean2); // expected : false
+	}
+
+	/**
+	 * 测试多线程下的、非线程安全的单例模式
+	 * TODO 无法重现线程不安全的效果，不知道为什么
+	 */
+	@Test
+	public void singletonInMultiThread() throws Exception {
+		final ClasspathXmlApplicationContext context = new ClasspathXmlApplicationContext(xmlPath);
+		for (int i = 0; i < 5; i++) {
+			new Thread() {
+				@Override
+				public void run() {
+					try {
+						HelloService bean = (HelloService) context.getBean(helloServiceBeanName);
+						System.out.println(bean);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start();
+		}
+		Thread.sleep(1000);
+	}
+
+
+	/**
+	 * TODO 开发并测试后置处理器
+	 */
+	@Test
+	public void beanPostProcessor() throws Exception {
+
 	}
 }

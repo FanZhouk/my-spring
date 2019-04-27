@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 public class AutowireCapableBeanFactory extends AbstractBeanFactory {
 
     /**
-     * 根据bean定义信息创建bean
+     * 根据bean定义信息创建bean（保证为新创建，而不是缓存中已有的）
      * 执行过程是：实例化->放入IoC容器->属性赋值
      * 属性赋值之前就放入了IoC容器，这样就保证了不会出现循环依赖问题！
      *
@@ -23,8 +23,6 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
      * @return bean实例
      */
     protected Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
-        if (beanDefinition.getBean() != null)
-            return beanDefinition.getBean();
         // 实例化对象
         Object bean = beanDefinition.getClassObject().getConstructor().newInstance();
         // 放入IoC容器中
