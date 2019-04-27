@@ -2,6 +2,8 @@ package com.fzk.ioc.beans.factory;
 
 import com.fzk.ioc.beans.def.BeanDefinition;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,10 +18,15 @@ public abstract class AbstractBeanFactory implements BeanFactory {
     /**
      * map结构作为IoC容器，key为bean名称，value为bean定义（包括bean实例及bean相关信息）
      */
-    private Map<String, BeanDefinition> beans = new ConcurrentHashMap<String, BeanDefinition>();
+    protected Map<String, BeanDefinition> beans = new ConcurrentHashMap<String, BeanDefinition>();
 
-    /**
-     * 从IoC容器中获取bean实例
+	/**
+	 * 后置处理器list
+	 */
+	protected List<PostProcessor> postProcessors = new ArrayList<PostProcessor>();
+
+	/**
+	 * 从IoC容器中获取bean实例
      * 懒加载，若容器中没有，则需要立即创建
      *
      * @param name bean名称
@@ -27,6 +34,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      */
     public Object getBean(String name) throws Exception {
         BeanDefinition beanDefinition = beans.get(name);
+        // TODO 引入自己的异常机制
         if (beanDefinition == null)
             throw new Exception("找不到此bean定义:" + name);
         Object bean = beanDefinition.getBean();
@@ -42,6 +50,12 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      * @return bean实例
      */
     protected abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
+
+	/**
+	 * 找到符合指定类型的所有bean名称
+	 * 符合类型是指，属于指定类及其子类，或是指定接口的实现类
+	 */
+	public abstract String[] getBeanNames(Class<?> clazz);
 
     /**
      * 注册bean定义
@@ -63,4 +77,11 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 		    }
 	    }
     }
+
+	/**
+	 * 添加后置处理器
+	 */
+	public void addPostProcessors(List<PostProcessor> list) {
+		this.postProcessors.addAll(list);
+	}
 }

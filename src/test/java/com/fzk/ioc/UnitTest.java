@@ -73,7 +73,8 @@ public class UnitTest {
     }
 
     /**
-     * 测试ApplicationContext
+     * 1. 测试ApplicationContext
+     * 2. 测试后置处理器、后置处理器的优先级
      */
     @Test
     public void getBeanApplicationContext() throws Exception {
@@ -114,14 +115,5 @@ public class UnitTest {
 			}.start();
 		}
 		Thread.sleep(1000);
-	}
-
-
-	/**
-	 * TODO 开发并测试后置处理器
-	 */
-	@Test
-	public void beanPostProcessor() throws Exception {
-
 	}
 }

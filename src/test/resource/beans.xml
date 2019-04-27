@@ -12,4 +12,7 @@
         <property name="helloService" ref="helloService"></property>
     </bean>
 
+    <!-- 后置处理器bean -->
+    <bean name="postProcessor" class="com.fzk.ioc.postProccess.MyPostProcessor"/>
+
 </beans>

@@ -1,11 +1,16 @@
 package com.fzk.ioc.context;
 
+import com.fzk.core.OrderComparator;
 import com.fzk.ioc.beans.def.BeanDefinition;
 import com.fzk.ioc.beans.def.reader.XmlBeanDefinitionReader;
 import com.fzk.ioc.beans.factory.AbstractBeanFactory;
 import com.fzk.ioc.beans.factory.AutowireCapableBeanFactory;
+import com.fzk.ioc.beans.factory.PostProcessor;
 import com.fzk.ioc.beans.io.ResourceLoader;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,7 +68,30 @@ public class ClasspathXmlApplicationContext extends AbstractApplicationContext {
             super.beanFactory.registerBeanDefinition(entry.getKey(), entry.getValue());
         }
 
+        // 预先实例化所有后置处理器bean
+	    registerBeanPostProcessors();
+
         // 预先实例化所有单例bean
 	    beanFactory.preInstantiateSingletons();
     }
+
+	/**
+	 * 预先实例化所有后置处理器bean
+	 *
+	 * 此方法将在实例化业务bean之前执行，因此保证后置处理器会应用于 “任何其他” bean。
+	 */
+	private void registerBeanPostProcessors() throws Exception {
+		String[] beanNames = beanFactory.getBeanNames(PostProcessor.class);
+
+		// 实例化
+		List<PostProcessor> list = new ArrayList<PostProcessor>(beanNames.length);
+		for (String beanName : beanNames) {
+			list.add((PostProcessor) getBean(beanName));
+		}
+		// 按照order顺序排序
+		Collections.sort(list, new OrderComparator());
+
+		// 注册进beanFactory中
+		beanFactory.addPostProcessors(list);
+	}
 }
